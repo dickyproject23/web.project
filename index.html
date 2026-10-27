@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special 💗</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+
+    <main class="container">
+
+        <div class="counter">
+            <span id="current">01</span> / 08
+        </div>
+
+        <section class="slide active">
+            <div class="emoji">💗</div>
+            <p class="small">A LITTLE MESSAGE FOR YOU</p>
+            <h1>Hai, <span>Beautiful!</span></h1>
+            <p>Ada sesuatu yang ingin aku sampaikan ke kamu...</p>
+            <button onclick="nextSlide()">Buka pesannya ✨</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">🌷</div>
+            <p class="small">SLIDE 02 — ABOUT YOU</p>
+            <h1>Kamu Itu <span>Istimewa</span></h1>
+            <p>Di antara banyaknya orang di dunia, kamu punya cara sendiri untuk membuat semuanya terasa lebih indah.</p>
+            <button onclick="nextSlide()">Lanjut yuk →</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">🦋</div>
+            <p class="small">SLIDE 03 — YOUR SMILE</p>
+            <h1>Tetaplah <span>Tersenyum</span></h1>
+            <p>Semoga kamu selalu punya alasan untuk tersenyum, bahkan di hari yang terasa melelahkan.</p>
+            <button onclick="nextSlide()">Berikutnya →</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">🌙</div>
+            <p class="small">SLIDE 04 — REMEMBER</p>
+            <h1>Kamu Itu <span>Berharga</span></h1>
+            <p>Jangan lupa kalau kamu juga pantas mendapatkan kebahagiaan, ketenangan, dan hal-hal baik.</p>
+            <button onclick="nextSlide()">Lanjut →</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">💐</div>
+            <p class="small">SLIDE 05 — WISHES</p>
+            <h1>Semoga <span>Bahagia</span></h1>
+            <p>Semoga langkahmu dimudahkan, impianmu tercapai, dan hari-harimu dipenuhi cerita yang menyenangkan.</p>
+            <button onclick="nextSlide()">Masih ada lagi 💕</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">⭐</div>
+            <p class="small">SLIDE 06 — FOR YOU</p>
+            <h1>Jangan <span>Menyerah</span></h1>
+            <p>Kalau hari ini terasa berat, istirahatlah sebentar. Kamu tidak harus menyelesaikan semuanya sekaligus.</p>
+            <button onclick="nextSlide()">Lanjut lagi →</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">💌</div>
+            <p class="small">SLIDE 07 — ONE LAST THING</p>
+            <h1>Terima Kasih <span>Ya!</span></h1>
+            <p>Terima kasih sudah menjadi dirimu sendiri. Semoga kamu selalu dikelilingi orang-orang yang tulus.</p>
+            <button onclick="nextSlide()">Pesan terakhir 💗</button>
+        </section>
+
+        <section class="slide">
+            <div class="emoji">💖</div>
+            <p class="small">SLIDE 08 — JUST FOR YOU</p>
+            <h1>Stay <span>Amazing!</span></h1>
+            <p>Jadilah dirimu sendiri, terus tumbuh, dan jangan pernah lupa bahwa banyak hal indah masih menunggumu.</p>
+            <p class="signature">With lots of good wishes ✨</p>
+            <button onclick="restart()">Ulangi dari awal ↻</button>
+        </section>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prev" onclick="prevSlide()" disabled>
+                ← Back
+            </button>
+
+            <div class="dots" id="dots"></div>
+
+            <button class="nav-btn" id="next" onclick="nextSlide()">
+                Next →
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        const slides = document.querySelectorAll(".slide");
+        const dotsContainer = document.getElementById("dots");
+        const current = document.getElementById("current");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        let index = 0;
+
+        slides.forEach((slide, i) => {
+            const dot = document.createElement("span");
+            dot.className = "dot" + (i === 0 ? " active-dot" : "");
+            dot.onclick = () => showSlide(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll(".dot");
+
+        function showSlide(n) {
+            index = Math.max(0, Math.min(n, slides.length - 1));
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle("active", i === index);
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active-dot", i === index);
+            });
+
+            current.textContent = String(index + 1).padStart(2, "0");
+            prev.disabled = index === 0;
+            next.disabled = index === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (index < slides.length - 1) showSlide(index + 1);
+        }
+
+        function prevSlide() {
+            if (index > 0) showSlide(index - 1);
+        }
+
+        function restart() {
+            showSlide(0);
+        }
+
+        // Bintang kecil agar tetap ringan
+        const stars = document.getElementById("stars");
+
+        for (let i = 0; i < 35; i++) {
+            const star = document.createElement("span");
+            star.className = "star";
+            star.textContent = Math.random() > 0.5 ? "✦" : "·";
+            star.style.left = Math.random() * 100 + "%";
+            star.style.top = Math.random() * 100 + "%";
+            star.style.animationDelay = Math.random() * 4 + "s";
+            stars.appendChild(star);
+        }
+
+        // Navigasi menggunakan keyboard
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") nextSlide();
+            if (e.key === "ArrowLeft") prevSlide();
+        });
+    </script>
+
+</body>
+</html>
